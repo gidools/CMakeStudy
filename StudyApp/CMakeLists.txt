@@ -1,15 +1,16 @@
 # set minimum version
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(recipe-01 LANGUAGES C CXX)
+project(recipe-03 LANGUAGES C CXX)
 
-#add_library(cmake-study
-#        SHARED
-#        src/main/cpp/main.cpp
-#        )
-
-message(STATUS "Project name is " ${PROJECT_NAME})
+add_library(message
+        STATIC
+        src/main/cpp/Message.cpp
+        )
 
 add_executable(${PROJECT_NAME}
-        src/main/cpp/main.cpp
-        )
+        src/main/cpp/main.cpp)
+
+target_link_libraries(${PROJECT_NAME} message)
+
+message(STATUS "Output directory is " ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
