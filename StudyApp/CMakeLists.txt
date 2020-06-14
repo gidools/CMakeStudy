@@ -1,17 +1,20 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(recipe-06 LANGUAGES C CXX)
+project(recipe-07 LANGUAGES C CXX)
 
-message(STATUS "Is the C++ compiler loaded? ${CMAKE_CXX_COMPILER_LOADED}")
-if(CMAKE_CXX_COMPILER_LOADED)
-    message(STATUS "The C++ compiler ID is: ${CMAKE_CXX_COMPILER_ID}")
-    message(STATUS "Is the C++ from GNU? ${CMAKE_COMPILER_IS_GNUCXX}")
-    message(STATUS "The C++ compiler version is: ${CMAKE_CXX_COMPILER_VERSION}")
-endif()
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE TYPE Release CACHE STRING "Build type" FORCE)
+    message(STATUS "CMAKE_BUILD_TYPE is not defined so set it to release type" ${CMAKE_BUILD_TYPE})
+endif ()
 
-message(STATUS "Is the C compiler loaded? ${CMAKE_C_COMPILER_LOADED}")
-if(CMAKE_C_COMPILER_LOADED)
-    message(STATUS "The C compiler ID is: ${CMAKE_C_COMPILER_ID}")
-    message(STATUS "Is the C from GNU? ${CMAKE_COMPILER_IS_GNUCC}")
-    message(STATUS "The C compiler version is: ${CMAKE_C_COMPILER_VERSION}")
-endif()
+message(STATUS "CMAKE_BUILD_TYPE is " ${CMAKE_BUILD_TYPE})
+
+message(STATUS "C flags, Debug configuration: ${CMAKE_C_FLAGS_DEBUG}")
+message(STATUS "C flags, Release configuration: ${CMAKE_C_FLAGS_RELEASE}")
+message(STATUS "C flags, Release configuration with Debug info: ${CMAKE_C_FLAGS_RELWITHDEBINFO}")
+message(STATUS "C flags, minimal Release configuration: ${CMAKE_C_FLAGS_MINSIZEREL}")
+
+message(STATUS "C++ flags, Debug configuration: ${CMAKE_CXX_FLAGS_DEBUG}")
+message(STATUS "C++ flags, Release configuration: ${CMAKE_CXX_FLAGS_RELEASE}")
+message(STATUS "C++ flags, Release configuration with Debug info: ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
+message(STATUS "C++ flags, minimal Release configuration: ${CMAKE_CXX_FLAGS_MINSIZEREL}")
