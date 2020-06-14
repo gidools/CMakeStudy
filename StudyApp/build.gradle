@@ -17,6 +17,7 @@ android {
 
         externalNativeBuild {
             cmake {
+                arguments "-DUSE_LIBRARY=ON", "-DBUILD_SHARED_LIBS=ON"
             }
         }
 
