@@ -1,47 +1,17 @@
-# set minimum version
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(recipe-04 LANGUAGES C CXX)
+project(recipe-06 LANGUAGES C CXX)
 
-option(USE_LIBRARY "Compile sources into a library" OFF)
+message(STATUS "Is the C++ compiler loaded? ${CMAKE_CXX_COMPILER_LOADED}")
+if(CMAKE_CXX_COMPILER_LOADED)
+    message(STATUS "The C++ compiler ID is: ${CMAKE_CXX_COMPILER_ID}")
+    message(STATUS "Is the C++ from GNU? ${CMAKE_COMPILER_IS_GNUCXX}")
+    message(STATUS "The C++ compiler version is: ${CMAKE_CXX_COMPILER_VERSION}")
+endif()
 
-message(STATUS "Compile source into a library? " ${USE_LIBRARY})
-
-#set(BUILD_SHARED_LIBS OFF)
-
-list(APPEND _sources
-        src/main/cpp/Message.cpp)
-
-if (USE_LIBRARY)
-    add_library(message ${_sources})
-
-    add_executable(${PROJECT_NAME}
-            src/main/cpp/main.cpp)
-
-    target_link_libraries(${PROJECT_NAME} message)
-else ()
-    add_executable(${PROJECT_NAME}
-            src/main/cpp/main.cpp
-            ${_sources})
-endif ()
-
-#add_library(message-objs
-#        OBJECT
-#        src/main/cpp/Message.cpp
-#        )
-#
-#add_library(message-shared
-#        SHARED
-#        $<TARGET_OBJECTS:message-objs>)
-#
-#add_library(message-static
-#        STATIC
-#        $<TARGET_OBJECTS:message-objs>)
-#
-#add_library(${PROJECT_NAME}
-#        SHARED
-#        src/main/cpp/main.cpp)
-#
-#target_link_libraries(${PROJECT_NAME} message-shared)
-
-message(STATUS "Output directory is " ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+message(STATUS "Is the C compiler loaded? ${CMAKE_C_COMPILER_LOADED}")
+if(CMAKE_C_COMPILER_LOADED)
+    message(STATUS "The C compiler ID is: ${CMAKE_C_COMPILER_ID}")
+    message(STATUS "Is the C from GNU? ${CMAKE_COMPILER_IS_GNUCC}")
+    message(STATUS "The C compiler version is: ${CMAKE_C_COMPILER_VERSION}")
+endif()
