@@ -1,20 +1,35 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(recipe-07 LANGUAGES C CXX)
+project(recipe-08 LANGUAGES CXX)
 
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE TYPE Release CACHE STRING "Build type" FORCE)
-    message(STATUS "CMAKE_BUILD_TYPE is not defined so set it to release type" ${CMAKE_BUILD_TYPE})
+message("C++ compiler flags : ${CMAKE_CXX_FLAGS}")
+
+list(APPEND flags "-fPIC" "-Wall")
+
+if (NOT WIN32)
+    list(APPEND flags "-Wextra" "-Wpedantic")
 endif ()
 
-message(STATUS "CMAKE_BUILD_TYPE is " ${CMAKE_BUILD_TYPE})
+add_library(geometry
+        STATIC
+        src/main/cpp/geometry_circle.cpp
+        src/main/cpp/geometry_polygon.cpp
+        src/main/cpp/geometry_rhombus.cpp
+        src/main/cpp/geometry_square.cpp
+        )
 
-message(STATUS "C flags, Debug configuration: ${CMAKE_C_FLAGS_DEBUG}")
-message(STATUS "C flags, Release configuration: ${CMAKE_C_FLAGS_RELEASE}")
-message(STATUS "C flags, Release configuration with Debug info: ${CMAKE_C_FLAGS_RELWITHDEBINFO}")
-message(STATUS "C flags, minimal Release configuration: ${CMAKE_C_FLAGS_MINSIZEREL}")
+target_compile_options(geometry
+        PRIVATE
+        ${flags}
+        )
 
-message(STATUS "C++ flags, Debug configuration: ${CMAKE_CXX_FLAGS_DEBUG}")
-message(STATUS "C++ flags, Release configuration: ${CMAKE_CXX_FLAGS_RELEASE}")
-message(STATUS "C++ flags, Release configuration with Debug info: ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
-message(STATUS "C++ flags, minimal Release configuration: ${CMAKE_CXX_FLAGS_MINSIZEREL}")
+add_library(compute-areas
+        SHARED
+        src/main/cpp/compute-areas.cpp)
+
+target_compile_options(compute-areas
+        PRIVATE
+        "-fPIC"
+        )
+
+target_link_libraries(compute-areas geometry)
