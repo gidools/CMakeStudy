@@ -6,10 +6,6 @@
 #include <cstdlib>
 #include <iostream>
 
-#ifdef MAXST_CUSTOMIZE
-#error MAXST_CUSTOMIZE is defined
-#endif
-
 int main() {
   using namespace geometry;
 
