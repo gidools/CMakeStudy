@@ -16,6 +16,9 @@ std::string say_hello() {
   return std::string("Hello PGI compiler!");
 #elif IS_XL_CXX_COMPILER
   return std::string("Hello XL compiler!");
+#elif IS_Clang_COMPILER
+#error IS_Clang_COMPILER is defined
+  return std::string("Hello Clang compiler!");
 #else
 #error No compiler found
   return std::string("Hello unknown compiler - have we met before?");
