@@ -1,12 +1,31 @@
+
+# Discovering the host processor architecture
+
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(recipe-03 LANGUAGES CXX)
+project(recipe-04 LANGUAGES CXX)
 
-add_executable(hello-world hello-world.cpp)
+add_executable(arch-dependent arch-dependent.cpp)
 
-target_compile_definitions(hello-world PUBLIC "COMPILER_NAME=\"${CMAKE_CXX_COMPILER_ID}\"")
+if (CMAKE_SIZEOF_VOID_P EQUAL 8)
+    target_compile_definitions(arch-dependent PUBLIC "IS_64_BIT_ARCH")
+    message(STATUS "Target is 64 bits")
+else ()
+    target_compile_definitions(arch-dependent PUBLIC "IS_32_BIT_ARCH")
+    message(STATUS "Target is 32 bits")
+endif ()
 
-message("Compiler name is " ${COMPILER_NAME})
-message("CMAKE_CXX_COMPILER_ID is ${CMAKE_CXX_COMPILER_ID}")
+if (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i386")
+    message(STATUS "i386 architecture detected")
+elseif (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i686")
+    message(STATUS "i686 architecture detected")
+elseif (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "x86_64")
+    message(STATUS "x86_64 architecture detected")
+else ()
+    message(STATUS "host processor architecture is unknown. CMAKE_HOST_SYSTEM_PROCESSOR is
+        ${CMAKE_HOST_SYSTEM_PROCESSOR}")
+endif ()
 
-target_compile_definitions(hello-world PUBLIC "IS_${CMAKE_CXX_COMPILER_ID}_COMPILER")
+target_compile_definitions(arch-dependent
+        PUBLIC "ARCHITECTURE=${CMAKE_HOST_SYSTEM_PROCESSOR}"
+        )
