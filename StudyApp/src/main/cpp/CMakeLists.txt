@@ -1,15 +1,20 @@
+
+#Ideally, we should avoid platform-dependent source code
+# Minimize platform-dependent source code in your project to make porting easier
+
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(recipe-01 LANGUAGES NONE)
+project(recipe-02 LANGUAGES CXX)
 
+add_executable(${PROJECT_NAME} hello-world.cpp)
+
+# The disadvantage of using add_definitions is that it modifies compile definitions for the entire project
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    message(STATUS "Configuring on/for Linux")
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-    message(STATUS "Configuring on/for macOS")
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    message(STATUS "Configuring on/for Windows")
-elseif(CMAKE_SYSTEM_NAME STREQUAL "AIX")
-    message(STATUS "Configuring on/for IBM AIX")
-else()
-    message(STATUS "Configuring on/for ${CMAKE_SYSTEM_NAME}")
+    target_compile_definitions(${PROJECT_NAME} PUBLIC "IS_LINUX")
+endif()
+if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    target_compile_definitions(${PROJECT_NAME} PUBLIC "IS_MACOS")
+endif()
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    target_compile_definitions(${PROJECT_NAME} PUBLIC "IS_WINDOWS")
 endif()
