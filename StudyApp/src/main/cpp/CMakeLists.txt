@@ -1,31 +1,52 @@
+# set minimum cmake version
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
-# Discovering the host processor architecture
+# project name and language
+project(recipe-05 LANGUAGES CXX)
 
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+# define executable
+add_executable(processor-info "")
 
-project(recipe-04 LANGUAGES CXX)
-
-add_executable(arch-dependent arch-dependent.cpp)
-
-if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-    target_compile_definitions(arch-dependent PUBLIC "IS_64_BIT_ARCH")
-    message(STATUS "Target is 64 bits")
-else ()
-    target_compile_definitions(arch-dependent PUBLIC "IS_32_BIT_ARCH")
-    message(STATUS "Target is 32 bits")
-endif ()
-
-if (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i386")
-    message(STATUS "i386 architecture detected")
-elseif (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i686")
-    message(STATUS "i686 architecture detected")
-elseif (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "x86_64")
-    message(STATUS "x86_64 architecture detected")
-else ()
-    message(STATUS "host processor architecture is unknown. CMAKE_HOST_SYSTEM_PROCESSOR is
-        ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-endif ()
-
-target_compile_definitions(arch-dependent
-        PUBLIC "ARCHITECTURE=${CMAKE_HOST_SYSTEM_PROCESSOR}"
+# and its source file
+target_sources(processor-info
+        PRIVATE
+        processor-info.cpp
         )
+
+message(STATUS "PROJECT_BINARY_DIR is ${PROJECT_BINARY_DIR}")
+
+# and its include directories
+target_include_directories(processor-info
+        PRIVATE
+        ${PROJECT_BINARY_DIR}
+        )
+
+foreach(key
+        IN ITEMS
+        NUMBER_OF_LOGICAL_CORES
+        NUMBER_OF_PHYSICAL_CORES
+        TOTAL_VIRTUAL_MEMORY
+        AVAILABLE_VIRTUAL_MEMORY
+        TOTAL_PHYSICAL_MEMORY
+        AVAILABLE_PHYSICAL_MEMORY
+        IS_64BIT
+        HAS_FPU
+        HAS_MMX
+        HAS_MMX_PLUS
+        HAS_SSE
+        HAS_SSE2
+        HAS_SSE_FP
+        HAS_SSE_MMX
+        HAS_AMD_3DNOW
+        HAS_AMD_3DNOW_PLUS
+        HAS_IA64
+        OS_NAME
+        OS_RELEASE
+        OS_VERSION
+        OS_PLATFORM
+        )
+    cmake_host_system_information(RESULT _${key} QUERY ${key})
+    message(STATUS "_${key} RESULT ${RESULT}")
+endforeach()
+
+configure_file(config.h.in config.h @ONLY)

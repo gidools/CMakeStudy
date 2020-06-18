@@ -17,7 +17,8 @@ android {
 
         externalNativeBuild {
             cmake {
-//                arguments "-DCMAKE_VERBOSE_MAKEFILE=ON"
+//                version '3.10.0'
+                arguments "-DCMAKE_VERBOSE_MAKEFILE=ON"
 //                cppFlags "-DMAXST_CUSTOMIZE"
             }
         }
