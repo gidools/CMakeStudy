@@ -1,5 +1,12 @@
 # set minimum cmake version
-cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.6 FATAL_ERROR)
+
+# cmake 3.10 does not show detail message in console window.
+# cmake 3.6 fails to compile.
+# Error is   CMake Error at CMakeLists.txt:48 (cmake_host_system_information):
+# cmake_host_system_information does not recognize <key> IS_64BIT
+
+#cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
 # project name and language
 project(recipe-05 LANGUAGES CXX)
