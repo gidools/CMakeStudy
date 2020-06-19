@@ -1,31 +1,16 @@
-
-# Discovering the host processor architecture
-
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(recipe-04 LANGUAGES CXX)
+project(recipe-02 LANGUAGES NONE)
 
-add_executable(arch-dependent arch-dependent.cpp)
+# First add cmake folder to CMAKE_MODULE_PATH
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-    target_compile_definitions(arch-dependent PUBLIC "IS_64_BIT_ARCH")
-    message(STATUS "Target is 64 bits")
-else ()
-    target_compile_definitions(arch-dependent PUBLIC "IS_32_BIT_ARCH")
-    message(STATUS "Target is 32 bits")
-endif ()
+# The include(colors) command instructs CMake to search ${CMAKE_MODULE_PATH} for a module with ...
+include(colors)
+define_colors()
 
-if (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i386")
-    message(STATUS "i386 architecture detected")
-elseif (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i686")
-    message(STATUS "i686 architecture detected")
-elseif (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "x86_64")
-    message(STATUS "x86_64 architecture detected")
-else ()
-    message(STATUS "host processor architecture is unknown. CMAKE_HOST_SYSTEM_PROCESSOR is
-        ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-endif ()
-
-target_compile_definitions(arch-dependent
-        PUBLIC "ARCHITECTURE=${CMAKE_HOST_SYSTEM_PROCESSOR}"
-        )
+message(STATUS "This is a normal message")
+message(STATUS "${Red}This is a red${ColourReset}")
+message(STATUS "${BoldRed}This is a bold red${ColourReset}")
+message(STATUS "${Green}This is a green${ColourReset}")
+message(STATUS "${BoldMagenta}This is bold${ColourReset}")
