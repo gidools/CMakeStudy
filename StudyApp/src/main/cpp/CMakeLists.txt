@@ -1,31 +1,18 @@
-
-# Discovering the host processor architecture
-
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(recipe-04 LANGUAGES CXX)
+project(recipe-01 LANGUAGES CXX)
 
-add_executable(arch-dependent arch-dependent.cpp)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-    target_compile_definitions(arch-dependent PUBLIC "IS_64_BIT_ARCH")
-    message(STATUS "Target is 64 bits")
-else ()
-    target_compile_definitions(arch-dependent PUBLIC "IS_32_BIT_ARCH")
-    message(STATUS "Target is 32 bits")
-endif ()
+include(GNUInstallDirs)
 
-if (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i386")
-    message(STATUS "i386 architecture detected")
-elseif (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i686")
-    message(STATUS "i686 architecture detected")
-elseif (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "x86_64")
-    message(STATUS "x86_64 architecture detected")
-else ()
-    message(STATUS "host processor architecture is unknown. CMAKE_HOST_SYSTEM_PROCESSOR is
-        ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-endif ()
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 
-target_compile_definitions(arch-dependent
-        PUBLIC "ARCHITECTURE=${CMAKE_HOST_SYSTEM_PROCESSOR}"
-        )
+add_subdirectory(src)
+
+enable_testing()
+add_subdirectory(tests)
