@@ -1,13 +1,11 @@
-add_library(parser "")
-
-target_sources(parser
+target_sources(automaton
   PRIVATE
-    parser.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/parser.cpp
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/parser.hpp
   )
 
-target_include_directories(parser
+target_include_directories(automaton
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}
   )

@@ -1,15 +1,20 @@
-add_executable(automata main.cpp)
+add_library(automaton "")
+add_library(evolution "")
 
-add_subdirectory(evolution)
-add_subdirectory(initial)
-add_subdirectory(io)
-add_subdirectory(parser)
+include(${CMAKE_CURRENT_LIST_DIR}/evolution/CMakeLists.txt)
+include(${CMAKE_CURRENT_LIST_DIR}/initial/CMakeLists.txt)
+include(${CMAKE_CURRENT_LIST_DIR}/io/CMakeLists.txt)
+include(${CMAKE_CURRENT_LIST_DIR}/parser/CMakeLists.txt)
+
+add_executable(automata "")
+
+target_sources(automata
+  PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/main.cpp
+  )
 
 target_link_libraries(automata
   PRIVATE
+    automaton
     conversion
-    evolution
-    initial
-    io
-    parser
   )

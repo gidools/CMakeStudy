@@ -1,13 +1,11 @@
-add_library(io "")
-
-target_sources(io
+target_sources(automaton
   PRIVATE
-    io.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/io.cpp
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/io.hpp
   )
 
-target_include_directories(io
+target_include_directories(automaton
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}
   )

@@ -1,13 +1,11 @@
-add_library(initial "")
-
-target_sources(initial
+target_sources(automaton
   PRIVATE
-    initial.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/initial.cpp
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/initial.hpp
   )
 
-target_include_directories(initial
+target_include_directories(automaton
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}
   )
