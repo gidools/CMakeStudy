@@ -1,31 +1,27 @@
-
-# Discovering the host processor architecture
-
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(recipe-04 LANGUAGES CXX)
+project(recipe-03 LANGUAGES C CXX)
 
-add_executable(arch-dependent arch-dependent.cpp)
+include(set_compiler_flag.cmake)
 
-if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-    target_compile_definitions(arch-dependent PUBLIC "IS_64_BIT_ARCH")
-    message(STATUS "Target is 64 bits")
-else ()
-    target_compile_definitions(arch-dependent PUBLIC "IS_32_BIT_ARCH")
-    message(STATUS "Target is 32 bits")
-endif ()
+set_compiler_flag(
+  working_compile_flag C REQUIRED
+  "-foo"             # this should fail
+  "-wrong"           # this should fail
+  "-wrong"           # this should fail
+  "-Wall"            # this should work with GNU
+  "-warn all"        # this should work with Intel
+  "-Minform=inform"  # this should work with PGI
+  "-nope"            # this should fail
+  )
 
-if (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i386")
-    message(STATUS "i386 architecture detected")
-elseif (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i686")
-    message(STATUS "i686 architecture detected")
-elseif (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "x86_64")
-    message(STATUS "x86_64 architecture detected")
-else ()
-    message(STATUS "host processor architecture is unknown. CMAKE_HOST_SYSTEM_PROCESSOR is
-        ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-endif ()
+message(STATUS "working C compile flag: ${working_compile_flag}")
 
-target_compile_definitions(arch-dependent
-        PUBLIC "ARCHITECTURE=${CMAKE_HOST_SYSTEM_PROCESSOR}"
-        )
+set_compiler_flag(
+  working_compile_flag CXX REQUIRED
+  "-foo"    # this should fail
+  "-g"      # this should work with GNU, Intel, PGI
+  "/RTCcsu" # this should work with MSVC
+  )
+
+message(STATUS "working CXX compile flag: ${working_compile_flag}")
