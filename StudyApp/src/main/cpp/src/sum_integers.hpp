@@ -1,1 +1,5 @@
-../../../../chapter-04/recipe-01/cxx-example/sum_integers.hpp
+#pragma once
+
+#include <vector>
+
+int sum_integers(const std::vector<int> integers);
